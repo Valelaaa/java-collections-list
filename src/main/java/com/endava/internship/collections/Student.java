@@ -23,6 +23,29 @@ public class Student //TODO consider implementing any interfaces necessary for y
 
     public String getDetails() { return details; }
 
+    @Override
+    public int hashCode() {
+        int result = 13;
+        result = 17 * result + (name==null?0:name.hashCode());
+        result = 17 * result + (dateOfBirth==null?0:dateOfBirth.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        return name.equals(((Student) obj).name) && dateOfBirth.equals(((Student) obj).dateOfBirth);
+    }
+
+    @Override
+    public String toString() {
+        return "Student:[ "+ name+", Birthday: "+dateOfBirth.toString()+", "+details+"]";
+    }
     /*
     TODO consider overriding any methods for this object to function properly within a collection:
         1. A student is considered unique by a combination of their name and dateOfBirth
