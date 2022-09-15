@@ -6,27 +6,36 @@ import java.util.Objects;
 /**
  * The class that defines the element that will be contained by your collection
  */
-public class Student //TODO consider implementing any interfaces necessary for your collection
-{
-    private String name;
-    private LocalDate dateOfBirth;
+public class Student {
+    final private String name;
+    final private LocalDate dateOfBirth;
     private String details;
 
-    public Student(String name, LocalDate dateOfBirth, String details) {
+    public Student(String name, final LocalDate dateOfBirth, String details) {
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.details = details;
     }
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
-    public LocalDate getDateOfBirth() { return dateOfBirth; }
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
 
-    public String getDetails() { return details; }
+    public void setDetails(String details) {
+        this.details = details;
+    }
+
+    public String getDetails() {
+        return details;
+    }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name,dateOfBirth);
+        return Objects.hash(name, dateOfBirth);
     }
 
     @Override
@@ -40,15 +49,9 @@ public class Student //TODO consider implementing any interfaces necessary for y
         return name.equals(((Student) obj).name) && dateOfBirth.equals(((Student) obj).dateOfBirth);
     }
 
-
     @Override
     public String toString() {
-        return "Student:[ "+ name+", Birthday: "+dateOfBirth.toString()+", "+details+"]";
+        return "Student:[ " + name + ", Birthday: " + dateOfBirth.toString() + ", " + details + "]";
     }
-    /*
-    TODO consider overriding any methods for this object to function properly within a collection:
-        1. A student is considered unique by a combination of their name and dateOfBirth
-        2. Student names are sorted alphabetically, if two students have the same name, then the older one is
-        placed before the younger student in an ordered student list.
-    */
+
 }
