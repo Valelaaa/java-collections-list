@@ -122,14 +122,11 @@ public class StudentList implements List<Student> {
              */
             @Override
             public boolean hasNext() {
-                if (current + 1 < size)
-//                    if(Objects.nonNull(students[current+1]))
-                    return true;
-                return false;
+                return current + 1 < size;
             }
 
             /**
-             *  return next element of the list, advances the iterator to the next element
+             * return next element of the list, advances the iterator to the next element
              * @return next element of the list
              */
             @Override
@@ -141,16 +138,16 @@ public class StudentList implements List<Student> {
         };
     }
     /**
-     * Returns an array containing all of the elements
+     * Returns an array containing all the elements
      * in this list in proper sequence (from first to last element).
-     * @return an array containing all of the elements in this list in proper sequence
+     * @return an array containing all the elements in this list in proper sequence
      */
     @Override
     public Object[] toArray() {
-        return (Object[])Arrays.copyOf(students,size);
+        return Arrays.copyOf(students,size);
     }
     /**
-     * Returns an array containing all of the elements in this list in proper
+     * Returns an array containing all the elements in this list in proper
      *          sequence (from first to last element)
      * @param ts the array into which the elements of this list are to
      *          be stored
@@ -161,6 +158,8 @@ public class StudentList implements List<Student> {
     public <T> T[] toArray(T[] ts) {
         if (Objects.isNull(ts))
             throw new NullPointerException("Cannot invoke \"toArray()\" because ts is null");
+        if (!(ts instanceof Student[]))
+            throw new ClassCastException("Cannot cast class "+ts.getClass()+" to class "+Student[].class);
         if (ts.length < size)
             return (T[]) Arrays.copyOf(students,size);
         System.arraycopy(students,0,ts,0,size);
@@ -181,7 +180,6 @@ public class StudentList implements List<Student> {
             students = Arrays.copyOf(students,capacity);
         }
         students[size++] = student;
-        //return contains(student);
         return true;
     }
     /**
@@ -194,8 +192,8 @@ public class StudentList implements List<Student> {
     public boolean remove(Object o) {
         if (o != null)
             if (contains(o)) {
-                for (int i = 0, j = 0; i < size; i++) {
-                    if ((Object) students[i] == o) {
+                for (int i = 0; i < size; i++) {
+                    if (students[i].equals(o)) {
                         System.arraycopy(students,i+1,students,i,size-i);
                     }
                 }
@@ -205,7 +203,7 @@ public class StudentList implements List<Student> {
         return false;
     }
     /**
-     * Removes all of the elements from this list.
+     * Removes all the elements from this list.
      * The list will be empty after this call returns.
      */
     @Override
@@ -332,12 +330,10 @@ public class StudentList implements List<Student> {
         return new ListIterator<Student>() {
             private int current = i;
             private int wasCalled = -1;
-            private boolean wasModificated = false;
+
             @Override
             public boolean hasNext() {
-                if (current + 1 < size)
-                    return true;
-                return false;
+                return current + 1 < size;
             }
 
             @Override
@@ -350,9 +346,7 @@ public class StudentList implements List<Student> {
 
             @Override
             public boolean hasPrevious() {
-                if (current >= 0)
-                    return true;
-                return false;
+                return current >= 0;
             }
 
             @Override
@@ -378,11 +372,8 @@ public class StudentList implements List<Student> {
                 if (wasCalled < 0)
                     throw new IllegalStateException("next or previous elements" +
                             "wasn't called");
-                //Тут должен быть UnsupportedOperationException,
-                // но я не знаю какие условия выбрасывания ислючения исключения
                 StudentList.this.remove(wasCalled);
                 current--;
-                wasModificated = true;
             }
 
             @Override
@@ -392,7 +383,6 @@ public class StudentList implements List<Student> {
                             "wasn't called");
                 StudentList.this.set(wasCalled,student);
                 current++;
-                wasModificated = true;
             }
 
             @Override
@@ -402,7 +392,6 @@ public class StudentList implements List<Student> {
                             "wasn't called");
                 StudentList.this.add(wasCalled,student);
                 current++;
-                wasModificated = true;
             }
         };
     }
@@ -417,7 +406,6 @@ public class StudentList implements List<Student> {
      */
     @Override
     public List<Student> subList(int i, int i1) {
-        //TODO - не уверен что решение правильное
         if (i < 0 || i1>size)
             throw new IndexOutOfBoundsException("Index " + i + " or " + i1 +
                     " out of bounds");
@@ -427,7 +415,7 @@ public class StudentList implements List<Student> {
         return Arrays.asList(Arrays.copyOfRange(students, i, i1));
     }
     /**
-     * Appends all of the elements in the specified collection to the
+     * Appends all the elements in the specified collection to the
      * end of this list, in the order that they are returned
      * by the specified collection's Iterator.
      * @param collection collection containing elements to be added to this collection
@@ -440,28 +428,27 @@ public class StudentList implements List<Student> {
             throw new NullPointerException("Cannot invoke " +
                     "\"\" because \"collection\" is null");
 
-            final Student[] array = collection.toArray(new Student[collection.size()]);
-            if(array.length + size > capacity){
-                capacity = ((array.length+size) * 3) / 2 + 1;
-            }
-            final Student[] temp = new Student[capacity];
-            System.arraycopy(students,0,temp,0,size);
-            System.arraycopy(array,0,temp,size,array.length);
-            students = temp;
-            size = size+ array.length;
-            return true;
+        final Student[] array = collection.toArray(new Student[collection.size()]);
+        if(array.length + size > capacity){
+            capacity = ((array.length + size) * 3) / 2 + 1;
+        }
+        final Student[] temp = new Student[capacity];
+        System.arraycopy(students,0,temp,0,size);
+        System.arraycopy(array,0,temp,size,array.length);
+        students = temp;
+        size = size + array.length;
+        return true;
     }
     /**
-     * Returns true if this list contains all of the elements
+     * Returns true if this list contains all the elements
      *          of the specified collection
      * @param collection collection to be checked for containment in this list
-     * @return true if this list contains all of
+     * @return true if this list contains all
      *          the elements of the specified collection
      * @throws NullPointerException if collection is null
      */
     @Override
     public boolean containsAll(Collection<?> collection) {
-        //Ignore this for homework
         if(Objects.isNull(collection))
             throw new NullPointerException("Cannot invoke containsAll() because" +
                     " \"collection\" is null");
@@ -483,19 +470,16 @@ public class StudentList implements List<Student> {
      */
     @Override
     public boolean addAll(int i, Collection<? extends Student> collection) {
-        //Ignore this for homework
         if (i < 0 || i >= size)
             throw new IndexOutOfBoundsException("Cannot invoke addAll because "+ i
                     +" out of range" + size);
         if (Objects.isNull(collection))
             throw new NullPointerException("Cannot invoke addAll because collection is null");
-        if(!(collection instanceof Student))
-            throw new ClassCastException("incompatible types: "+ collection.getClass()+
-                    " cannot be converted to"+this.getClass());
-        collection.forEach(element -> add(i,element));
-        if (containsAll(collection))
-            return true;
-        return false;
+        int startSize = size;
+        for (Student student: collection) {
+            add(i++, student);
+        }
+        return startSize != size;
     }
     /**
      * Removes all elements of collection from this list
@@ -505,13 +489,8 @@ public class StudentList implements List<Student> {
      */
     @Override
     public boolean removeAll(Collection<?> collection) {
-        //Ignore this for homework
         if (Objects.isNull(collection))
             throw new NullPointerException("Cannot invoke addAll because collection is null");
-        if(!(collection instanceof Student))
-            throw new ClassCastException("incompatible types: "+ collection.getClass()+
-                    " cannot be converted to"+this.getClass());
-        //if at least one element was deleted from list
         boolean modified = false;
         for(Object obj:collection)
             if (remove(obj))
@@ -525,12 +504,8 @@ public class StudentList implements List<Student> {
      */
     @Override
     public boolean retainAll(Collection<?> collection) {
-        //Ignore this for homework
         if (Objects.isNull(collection))
             throw new NullPointerException("Cannot invoke retainAll because collection is null");
-        if(!(collection instanceof Student))
-            throw new ClassCastException("incompatible types: "+ collection.getClass()+
-                    " cannot be converted to"+this.getClass());
         boolean modified = false;
         int index = 0;
         final Student[] std = new Student[capacity];
