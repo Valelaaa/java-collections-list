@@ -7,11 +7,11 @@ import java.util.Objects;
  * The class that defines the element that will be contained by your collection
  */
 public class Student {
-    final private String name;
-    final private LocalDate dateOfBirth;
+    private final String name;
+    private final LocalDate dateOfBirth;
     private String details;
 
-    public Student(String name, final LocalDate dateOfBirth, String details) {
+    public Student(final String name, final LocalDate dateOfBirth, String details) {
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.details = details;

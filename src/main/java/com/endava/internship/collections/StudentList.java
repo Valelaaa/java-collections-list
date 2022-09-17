@@ -7,7 +7,32 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
+import static java.util.Objects.nonNull;
 import static java.util.Objects.isNull;
+
+class ExceptionMessages {
+    public static final String CONSTRUCTOR_NULL_POINTER_EXCEPTION_MESSAGE
+            = "Cannot create object %s, because %s is null";
+    public static final String CONSTRUCTOR_ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE
+            = "Cannot create object %s, because initial capacity is wrong";
+    public static final String NULL_POINTER_EXCEPTION_MESSAGE
+            = "Cannot invoke %s, because %s is null";
+    public static final String NO_SUCH_ELEMENT_EXCEPTION_MESSAGE
+            = "Iterator has no next or previous element";
+    public static final String CLASS_CAST_EXCEPTION_MESSAGE
+            = "Cannot cast class \"%s\" to class \"%s\"";
+    public static final String INDEX_OUT_OF_BOUNDS_EXCEPTION_MESSAGE
+            = "Indexes %d and %d are out of range %d";
+    public static final String ARRAY_INDEX_OUT_OF_BOUNDS_EXCEPTION_MESSAGE
+            = "Index %d is out of range %d";
+    public static final String SUBLIST_ILLEGAL_STATE_EXCEPTION_MESSAGE
+            = "Index %d must be less than %d";
+    public static final String ITERATOR_ILLEGAL_STATE_EXCEPTION_MESSAGE
+            = "next or previous element wasn't called";
+    private ExceptionMessages(){
+        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
+    }
+}
 
 /**
  * StudentList class implements List interface
@@ -51,7 +76,7 @@ public class StudentList implements List<Student> {
             capacity = initialCapacity;
             students = new Student[capacity];
         } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(String.format(ExceptionMessages.CONSTRUCTOR_ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE, getClass()));
         }
     }
 
@@ -64,7 +89,7 @@ public class StudentList implements List<Student> {
      */
     public StudentList(final Collection<? extends Student> c) {
         if (isNull(c))
-            throw new NullPointerException();
+            throw new NullPointerException(String.format(ExceptionMessages.CONSTRUCTOR_NULL_POINTER_EXCEPTION_MESSAGE, getClass(), "c"));
         final Student[] array = c.toArray(new Student[c.size()]);
         if (array.length != 0) {
             size = array.length;
@@ -104,6 +129,8 @@ public class StudentList implements List<Student> {
      */
     @Override
     public boolean contains(final Object o) {
+        if (isNull(o))
+            throw new NullPointerException(String.format(ExceptionMessages.NULL_POINTER_EXCEPTION_MESSAGE, "contains", "Object"));
         for (int i = 0; i < size; i++)
             if (students[i].equals(o))
                 return true;
@@ -117,7 +144,6 @@ public class StudentList implements List<Student> {
      */
     @Override
     public Iterator<Student> iterator() {
-        //TODO
         return new Iterator<Student>() {
             /**
              * Index of current element of the list
@@ -140,7 +166,7 @@ public class StudentList implements List<Student> {
             @Override
             public Student next() {
                 if (current >= size)
-                    throw new NoSuchElementException();
+                    throw new NoSuchElementException(ExceptionMessages.NO_SUCH_ELEMENT_EXCEPTION_MESSAGE);
                 return students[++current];
             }
         };
@@ -169,9 +195,9 @@ public class StudentList implements List<Student> {
     @Override
     public <T> T[] toArray(T[] ts) {
         if (isNull(ts))
-            throw new NullPointerException();
+            throw new NullPointerException(String.format(ExceptionMessages.NULL_POINTER_EXCEPTION_MESSAGE, "toArray", "ts"));
         if (!(ts instanceof Student[]))
-            throw new ClassCastException();
+            throw new ClassCastException(String.format(ExceptionMessages.CLASS_CAST_EXCEPTION_MESSAGE, ts.getClass(), getClass()));
         if (ts.length < size)
             return (T[]) Arrays.copyOf(students, size);
         System.arraycopy(students, 0, ts, 0, size);
@@ -206,16 +232,15 @@ public class StudentList implements List<Student> {
      */
     @Override
     public boolean remove(final Object o) {
-        if (o != null)
-            if (contains(o)) {
-                for (int i = 0; i < size; i++) {
-                    if (students[i].equals(o)) {
-                        System.arraycopy(students, i + 1, students, i, size - i);
-                    }
+        if (nonNull(o)) {
+            for (int i = 0; i < size; i++)
+                if (students[i].equals(o)) {
+                    System.arraycopy(students, i + 1, students, i, size - i);
+                    break;
                 }
-                size--;
-                return true;
-            }
+            size--;
+            return true;
+        }
         return false;
     }
 
@@ -239,7 +264,7 @@ public class StudentList implements List<Student> {
     @Override
     public Student get(final int i) {
         if (i < 0 || i >= size)
-            throw new ArrayIndexOutOfBoundsException();
+            throw new ArrayIndexOutOfBoundsException(String.format(ExceptionMessages.ARRAY_INDEX_OUT_OF_BOUNDS_EXCEPTION_MESSAGE, i, size));
         return students[i];
     }
 
@@ -254,7 +279,7 @@ public class StudentList implements List<Student> {
     @Override
     public Student set(final int i, final Student student) {
         if (i < 0 || i >= size)
-            throw new ArrayIndexOutOfBoundsException();
+            throw new ArrayIndexOutOfBoundsException(String.format(ExceptionMessages.ARRAY_INDEX_OUT_OF_BOUNDS_EXCEPTION_MESSAGE, i, size));
         Student tmp = students[i];
         students[i] = student;
         return tmp;
@@ -263,7 +288,7 @@ public class StudentList implements List<Student> {
     /**
      * Inserts the specified element at the specified position in this list.
      * Shifts the element currently at that position (if any) and any subsequent
-     * elements to the right (adds one to their indices).
+     * elements to the right (s one to their indices).
      *
      * @param i       index at which the specified element is to be inserted
      * @param student element to be inserted
@@ -272,7 +297,7 @@ public class StudentList implements List<Student> {
     @Override
     public void add(final int i, final Student student) {
         if (i < 0 || i >= size)
-            throw new ArrayIndexOutOfBoundsException();
+            throw new ArrayIndexOutOfBoundsException(String.format(ExceptionMessages.ARRAY_INDEX_OUT_OF_BOUNDS_EXCEPTION_MESSAGE, i, size));
         size++;
         System.arraycopy(students, i, students, i + 1, size - 1);
         students[i] = student;
@@ -290,7 +315,9 @@ public class StudentList implements List<Student> {
     @Override
     public Student remove(final int i) {
         if (i < 0 || i >= size)
-            throw new ArrayIndexOutOfBoundsException();
+            throw new ArrayIndexOutOfBoundsException(
+                    String.format(ExceptionMessages
+                            .ARRAY_INDEX_OUT_OF_BOUNDS_EXCEPTION_MESSAGE, i, size));
         Student temp = students[i];
         System.arraycopy(students, i + 1, students, i, size - i);
         return temp;
@@ -354,7 +381,9 @@ public class StudentList implements List<Student> {
     @Override
     public ListIterator<Student> listIterator(final int i) {
         if (i < 0 || i >= size)
-            throw new IndexOutOfBoundsException();
+            throw new IndexOutOfBoundsException(
+                    String.format(
+                            ExceptionMessages.ARRAY_INDEX_OUT_OF_BOUNDS_EXCEPTION_MESSAGE, i, size));
         return new ListIterator<Student>() {
             private int current = i;
             private int wasCalled = -1;
@@ -367,7 +396,7 @@ public class StudentList implements List<Student> {
             @Override
             public Student next() {
                 if (!hasNext())
-                    throw new NoSuchElementException();
+                    throw new NoSuchElementException(ExceptionMessages.NO_SUCH_ELEMENT_EXCEPTION_MESSAGE);
                 wasCalled = ++current;
                 return students[current];
             }
@@ -380,7 +409,7 @@ public class StudentList implements List<Student> {
             @Override
             public Student previous() {
                 if (!hasPrevious())
-                    throw new NoSuchElementException();
+                    throw new NoSuchElementException(ExceptionMessages.NO_SUCH_ELEMENT_EXCEPTION_MESSAGE);
                 wasCalled = --current;
                 return students[current];
             }
@@ -398,7 +427,7 @@ public class StudentList implements List<Student> {
             @Override
             public void remove() {
                 if (wasCalled < 0)
-                    throw new IllegalStateException();
+                    throw new IllegalStateException(ExceptionMessages.ITERATOR_ILLEGAL_STATE_EXCEPTION_MESSAGE);
                 StudentList.this.remove(wasCalled);
                 current--;
             }
@@ -406,7 +435,7 @@ public class StudentList implements List<Student> {
             @Override
             public void set(final Student student) {
                 if (wasCalled < 0)
-                    throw new IllegalStateException();
+                    throw new IllegalStateException(ExceptionMessages.ITERATOR_ILLEGAL_STATE_EXCEPTION_MESSAGE);
                 StudentList.this.set(wasCalled, student);
                 current++;
             }
@@ -414,7 +443,7 @@ public class StudentList implements List<Student> {
             @Override
             public void add(final Student student) {
                 if (wasCalled < 0)
-                    throw new IllegalStateException();
+                    throw new IllegalStateException(ExceptionMessages.ITERATOR_ILLEGAL_STATE_EXCEPTION_MESSAGE);
                 StudentList.this.add(wasCalled, student);
                 current++;
             }
@@ -434,9 +463,9 @@ public class StudentList implements List<Student> {
     @Override
     public List<Student> subList(final int i, final int i1) {
         if (i < 0 || i1 > size)
-            throw new IndexOutOfBoundsException();
+            throw new IndexOutOfBoundsException(String.format(ExceptionMessages.INDEX_OUT_OF_BOUNDS_EXCEPTION_MESSAGE, i, i1, size));
         if (i > i1)
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(String.format(ExceptionMessages.SUBLIST_ILLEGAL_STATE_EXCEPTION_MESSAGE, i, i1));
         return Arrays.asList(Arrays.copyOfRange(students, i, i1));
     }
 
@@ -452,7 +481,7 @@ public class StudentList implements List<Student> {
     @Override
     public boolean addAll(final Collection<? extends Student> collection) {
         if (isNull(collection))
-            throw new NullPointerException();
+            throw new NullPointerException(String.format(ExceptionMessages.NULL_POINTER_EXCEPTION_MESSAGE, "addAll", "ts"));
 
         final Student[] array = collection.toArray(new Student[collection.size()]);
         if (array.length + size > capacity) {
@@ -478,7 +507,7 @@ public class StudentList implements List<Student> {
     @Override
     public boolean containsAll(final Collection<?> collection) {
         if (isNull(collection))
-            throw new NullPointerException();
+            throw new NullPointerException(String.format(ExceptionMessages.NULL_POINTER_EXCEPTION_MESSAGE, "containsAll", "colleciton"));
         for (Object obj : collection) {
             if (!contains(obj))
                 return false;
@@ -499,9 +528,9 @@ public class StudentList implements List<Student> {
     @Override
     public boolean addAll(int i, final Collection<? extends Student> collection) {
         if (i < 0 || i >= size)
-            throw new IndexOutOfBoundsException();
+            throw new IndexOutOfBoundsException(String.format(ExceptionMessages.ARRAY_INDEX_OUT_OF_BOUNDS_EXCEPTION_MESSAGE, i, size));
         if (isNull(collection))
-            throw new NullPointerException();
+            throw new NullPointerException(String.format(ExceptionMessages.NULL_POINTER_EXCEPTION_MESSAGE, "addAll", "element"));
         int startSize = size;
         for (Student student : collection) {
             add(i++, student);
@@ -519,7 +548,7 @@ public class StudentList implements List<Student> {
     @Override
     public boolean removeAll(final Collection<?> collection) {
         if (isNull(collection))
-            throw new NullPointerException();
+            throw new NullPointerException(String.format(ExceptionMessages.NULL_POINTER_EXCEPTION_MESSAGE, "removeAll", "collection"));
         boolean modified = false;
         for (Object obj : collection)
             if (remove(obj))
@@ -536,7 +565,7 @@ public class StudentList implements List<Student> {
     @Override
     public boolean retainAll(final Collection<?> collection) {
         if (isNull(collection))
-            throw new NullPointerException();
+            throw new NullPointerException(String.format(ExceptionMessages.NULL_POINTER_EXCEPTION_MESSAGE, "retainAll", "collection"));
         boolean modified = false;
         int index = 0;
         final Student[] std = new Student[capacity];
