@@ -7,11 +7,11 @@ import java.util.Objects;
  * The class that defines the element that will be contained by your collection
  */
 public class Student {
-    private final String name;
-    private final LocalDate dateOfBirth;
+    final String name;
+    final LocalDate dateOfBirth;
     private String details;
 
-    public Student(final String name, final LocalDate dateOfBirth, String details) {
+    public Student(final String name, final LocalDate dateOfBirth,final String details) {
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.details = details;
@@ -25,7 +25,7 @@ public class Student {
         return dateOfBirth;
     }
 
-    public void setDetails(String details) {
+    public void setDetails(final String details) {
         this.details = details;
     }
 
@@ -39,7 +39,7 @@ public class Student {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj)
             return true;
         if (Objects.isNull(obj))
