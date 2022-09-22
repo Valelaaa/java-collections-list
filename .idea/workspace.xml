@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="313cd13a-0f4a-4c1d-a20c-f680957b3288" name="Changes" comment="StudentList implementation v1.7&#10;- Added junit tests">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/endava/internship/collections/StudentListTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/endava/internship/collections/StudentListTest.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageOptionsProvider">
+    <option name="myAddOrReplace" value="0" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit5 Test Class" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <excluded-from-favorite>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="master" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </excluded-from-favorite>
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="unitTest" />
+                <branch-info repo="$PROJECT_DIR$" source="develop" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="Test" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitRewordedCommitMessages">
+    <option name="commitMessagesMapping">
+      <RewordedCommitMessageMapping>
+        <option name="originalMessage" value="StudentList implementation v1.0" />
+        <option name="rewordedMessage" value="StudentList implementation" />
+      </RewordedCommitMessageMapping>
+    </option>
+    <option name="currentCommit" value="1" />
+    <option name="onto" value="a9be12d5d6dca50889d84c3325173af8a9006043" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2Elw34wEG56KtM3g9tcdoZwneqw" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;create.test.in.the.same.root&quot;: &quot;true&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\vcosneanu\IdeaProjects\java-collections-listv1" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.endava.internship.collections" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.StudentListTest">
+    <configuration name="StudentListTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="collections-list" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.endava.internship.collections.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.endava.internship.collections" />
+      <option name="MAIN_CLASS_NAME" value="com.endava.internship.collections.StudentListTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StudentListTest.listIteratorSetShouldChangeElement" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="collections-list" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.endava.internship.collections.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.endava.internship.collections" />
+      <option name="MAIN_CLASS_NAME" value="com.endava.internship.collections.StudentListTest" />
+      <option name="METHOD_NAME" value="listIteratorSetShouldChangeElement" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StudentListTest.subListShouldSucceed" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="collections-list" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.endava.internship.collections.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.endava.internship.collections" />
+      <option name="MAIN_CLASS_NAME" value="com.endava.internship.collections.StudentListTest" />
+      <option name="METHOD_NAME" value="subListShouldSucceed" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StudentListTest.toArrayThrowsNullPointerExceptionIfArrayIsNull" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="collections-list" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.endava.internship.collections.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.endava.internship.collections" />
+      <option name="MAIN_CLASS_NAME" value="com.endava.internship.collections.StudentListTest" />
+      <option name="METHOD_NAME" value="toArrayThrowsNullPointerExceptionIfArrayIsNull" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StudentListTest.whenCallIndexOf_ReturnsIndexOfElementInList" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="collections-list" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.endava.internship.collections.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.endava.internship.collections" />
+      <option name="MAIN_CLASS_NAME" value="com.endava.internship.collections.StudentListTest" />
+      <option name="METHOD_NAME" value="whenCallIndexOf_ReturnsIndexOfElementInList" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.StudentListTest" />
+        <item itemvalue="JUnit.StudentListTest.listIteratorSetShouldChangeElement" />
+        <item itemvalue="JUnit.StudentListTest.subListShouldSucceed" />
+        <item itemvalue="JUnit.StudentListTest.toArrayThrowsNullPointerExceptionIfArrayIsNull" />
+        <item itemvalue="JUnit.StudentListTest.whenCallIndexOf_ReturnsIndexOfElementInList" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="313cd13a-0f4a-4c1d-a20c-f680957b3288" name="Changes" comment="" />
+      <created>1663183278528</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1663183278528</updated>
+      <workItem from="1663183279959" duration="1610000" />
+      <workItem from="1663230081993" duration="12647000" />
+      <workItem from="1663305209045" duration="25894000" />
+      <workItem from="1663600269243" duration="27993000" />
+      <workItem from="1663826620080" duration="1308000" />
+      <workItem from="1663827996957" duration="904000" />
+      <workItem from="1663829675248" duration="165000" />
+      <workItem from="1663831077154" duration="237000" />
+      <workItem from="1663838331158" duration="10988000" />
+    </task>
+    <task id="LOCAL-00001" summary="StudentList implementation v1.0">
+      <created>1663183714731</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1663183714731</updated>
+    </task>
+    <task id="LOCAL-00002" summary="StudentList implementation v1.0">
+      <created>1663184371408</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1663184371408</updated>
+    </task>
+    <task id="LOCAL-00003" summary="StudentList implementation v1.1 (changes in Student.class)">
+      <created>1663230129982</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1663230129982</updated>
+    </task>
+    <task id="LOCAL-00004" summary="StudentList implementation v1.2">
+      <created>1663242824403</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1663242824403</updated>
+    </task>
+    <task id="LOCAL-00005" summary="StudentList implementation v1.3">
+      <created>1663272821652</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1663272821652</updated>
+    </task>
+    <task id="LOCAL-00006" summary="StudentList implementation v1.3">
+      <created>1663272894885</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1663272894885</updated>
+    </task>
+    <task id="LOCAL-00007" summary="StudentList implementation v1.3">
+      <created>1663273039947</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1663273039947</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Merge remote-tracking branch 'origin/develop' into develop&#10;&#10;# Conflicts:&#10;#&#9;src/main/java/com/endava/internship/collections/Student.java">
+      <created>1663273086277</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1663273086277</updated>
+    </task>
+    <task id="LOCAL-00009" summary="StudentList implementation v1.4">
+      <created>1663425851476</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1663425851476</updated>
+    </task>
+    <task id="LOCAL-00010" summary="StudentList implementation v1.5&#10;- class &quot;ExceptionMessages&quot; moved to file &quot;ExceptionTessages.java&quot;&#10;- added static import for String.format&#10;- fixed">
+      <created>1663602019298</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1663602019298</updated>
+    </task>
+    <task id="LOCAL-00011" summary="StudentList implementation v1.6&#10;- Added static import for some static methods&#10;- Added static import for constants">
+      <created>1663603710676</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1663603710676</updated>
+    </task>
+    <task id="LOCAL-00012" summary="StudentList implementation v1.7&#10;- Added junit tests">
+      <created>1663745474653</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1663745474653</updated>
+    </task>
+    <task id="LOCAL-00013" summary="StudentList implementation v1.7&#10;- Added junit tests">
+      <created>1663770108416</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1663770108416</updated>
+    </task>
+    <task id="LOCAL-00014" summary="StudentList implementation v1.7&#10;- Added junit tests">
+      <created>1663827781935</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1663827781935</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="Test" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="StudentList implementation v1.0" />
+    <MESSAGE value="StudentList implementation v1.1 (changes in Student.class)" />
+    <MESSAGE value="StudentList implementation v1.2" />
+    <MESSAGE value="StudentList implementation v1.3" />
+    <MESSAGE value="Merge remote-tracking branch 'origin/develop' into develop&#10;&#10;# Conflicts:&#10;#&#9;src/main/java/com/endava/internship/collections/Student.java" />
+    <MESSAGE value="StudentList implementation v1.4" />
+    <MESSAGE value="StudentList implementation v1.5" />
+    <MESSAGE value="StudentList implementation v1.5&#10;- class &quot;ExceptionMessages&quot; moved to file &quot;ExceptionTessages.java&quot;&#10;- added static import for String.format&#10;- fixed" />
+    <MESSAGE value="StudentList implementation v1.6&#10;- Added static import for some static methods&#10;- Added static import for constants" />
+    <MESSAGE value="StudentList implementation v1.7&#10;- Added junit tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="StudentList implementation v1.7&#10;- Added junit tests" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/java_collections_listv1$StudentListTest_whenElementNotRemoved_ShouldReturnFalse.ic" NAME="StudentListTest.whenElementNotRemoved_ShouldReturnFalse Coverage Results" MODIFIED="1663673450658" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.endava.internship.collections.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/java_collections_listv1$StudentListTest_toArrayThrowsNullPointerExceptionIfArrayIsNull.ic" NAME="StudentListTest.toArrayThrowsNullPointerExceptionIfArrayIsNull Coverage Results" MODIFIED="1663683686964" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.endava.internship.collections.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/java_collections_listv1$StudentListTest.ic" NAME="StudentListTest Coverage Results" MODIFIED="1663745399077" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.endava.internship.collections.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/java_collections_listv1$StudentListTest_sizeShouldSucceed.ic" NAME="StudentListTest.sizeShouldSucceed Coverage Results" MODIFIED="1663320535945" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.endava.internship.collections.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/java_collections_listv1$StudentListTest_CreateEmptyStudentList_ShouldSucceed.ic" NAME="StudentListTest.CreateEmptyStudentList_ShouldSucceed Coverage Results" MODIFIED="1663655270733" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.endava.internship.collections.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/java_collections_listv1$StudentListTest_subListShouldSucceed.ic" NAME="StudentListTest.subListShouldSucceed Coverage Results" MODIFIED="1663688366041" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.endava.internship.collections.*</FILTER>
+    </SUITE>
+  </component>
+</project>

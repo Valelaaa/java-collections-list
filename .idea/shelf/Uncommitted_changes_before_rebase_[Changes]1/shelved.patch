@@ -1,0 +1,192 @@
+Index: src/test/java/com/endava/internship/collections/StudentListTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/com/endava/internship/collections/StudentListTest.java b/src/test/java/com/endava/internship/collections/StudentListTest.java
+new file mode 100644
+--- /dev/null	(date 1663603969653)
++++ b/src/test/java/com/endava/internship/collections/StudentListTest.java	(date 1663603969653)
+@@ -0,0 +1,181 @@
++package com.endava.internship.collections;
++
++import org.junit.jupiter.api.BeforeEach;
++import org.junit.jupiter.api.Test;
++
++import java.time.LocalDate;
++import java.util.ArrayList;
++import java.util.Arrays;
++import java.util.Collection;
++import java.util.List;
++
++import static org.junit.jupiter.api.Assertions.*;
++
++class StudentListTest {
++    private static final int EXPECTED_SIZE = 5;
++    private StudentList students;
++    private static final Student STUDENT = new Student("Valera", LocalDate.of(2002, 8, 27), "Endava intern");
++    private static final Student STUDENT1 = new Student("Natalia", LocalDate.of(2004, 9, 15), "Valeriy's Mentor");
++    private static final Student STUDENT2 = new Student("Valera", LocalDate.of(2002, 8, 27), "Another Valera case");
++    private static final Student STUDENT3 = new Student("Nikita", LocalDate.of(2002, 1, 14), "My brother");
++
++    private static final Student STUDENT4 = new Student("Ivan", LocalDate.of(2002, 1, 14), "My brother");
++    private static final int TEST_INDEX = 1;
++    private static final int LAST_INDEXOF = 3;
++    private Collection<Student> list;
++    @BeforeEach
++    void init() {
++        this.students = new StudentList();
++        students.add(STUDENT);
++        students.add(STUDENT1);
++        students.add(STUDENT2);
++        students.add(STUDENT3);
++        students.add(STUDENT2);
++
++        list = new ArrayList<>();
++        list.add(STUDENT1);
++        list.add(STUDENT3);
++    }
++
++    /**
++     * Compare
++     */
++    @Test
++    void sizeShouldSucceed() {
++        assertEquals(EXPECTED_SIZE, students.size(), "When I add 4 students, list should have size 4");
++    }
++
++    @Test
++    void toArrayShouldSucceed() {
++        Object[] students = new Student[EXPECTED_SIZE];
++        students[0] = STUDENT;
++        students[1] = STUDENT1;
++        students[2] = STUDENT2;
++        students[3] = STUDENT3;
++        students[4] = STUDENT2;
++        assertArrayEquals(students, this.students.toArray());
++    }
++
++    @Test
++    void containsShouldSucceed() {
++        assertTrue(students.contains(STUDENT));
++        assertFalse(students.contains(new Student("Andry", LocalDate.of(2003, 9, 15), "No")));
++    }
++
++    @Test
++    void addShouldSucceed() {
++        assertTrue(students.add(STUDENT4));
++        assertTrue(students.contains(STUDENT));
++
++    }
++
++    @Test
++    void removeShouldSucceed() {
++        assertTrue(students.remove(STUDENT4));
++        assertFalse(students.contains(STUDENT4));
++
++    }
++
++    @Test
++    void iterator() {
++
++    }
++
++    @Test
++    void clearShouldSucceed() {
++        final StudentList studentList = new StudentList(students);
++        studentList.clear();
++        assertTrue(studentList.isEmpty());
++    }
++
++    @Test
++    void getShouldSucceed() {
++        assertEquals(STUDENT, students.get(0));
++    }
++
++    @Test
++    void setShouldSucceed() {
++        students.set(TEST_INDEX, STUDENT4);
++        assertEquals(STUDENT4, students.get(TEST_INDEX));
++    }
++
++    @Test
++    void AddWithIndexShouldSucceed() {
++        students.add(TEST_INDEX, STUDENT4);
++        assertEquals(STUDENT4, students.get(TEST_INDEX));
++
++    }
++
++    @Test
++    void RemoveWithIndexShouldSucceed() {
++        final Student std = STUDENT3;
++        students.remove(STUDENT3);
++        assertFalse(students.contains(std));
++    }
++
++    @Test
++    void indexOfShouldSucceed() {
++        assertEquals(students.indexOf(students.get(TEST_INDEX)),TEST_INDEX);
++    }
++
++    @Test
++    void lastIndexOfShouldSucceed() {
++        assertEquals(students.indexOf(students.get(LAST_INDEXOF)),LAST_INDEXOF);
++    }
++
++    @Test
++    void listIterator() {
++
++    }
++
++    @Test
++    void testListIterator() {
++
++    }
++
++    @Test
++    void subListShouldSucceed() {
++        List<Student> sublist = new ArrayList<>();
++        sublist.add(STUDENT1);
++        sublist.add(STUDENT2);
++        assertEquals(sublist,students.subList(1,3));
++    }
++
++    @Test
++    void addAll() {
++        StudentList lint = new StudentList();
++        lint.addAll(list);
++        for(Student student: list)
++            assertTrue(lint.contains(student));
++        }
++
++
++    @Test
++    void containsAll() {
++        assertTrue(students.containsAll(list));
++        for (Student student:list)
++            assertTrue(students.contains(student));
++    }
++
++    @Test
++    void testAddAll() {
++
++    }
++
++    @Test
++    void removeAll() {
++        System.out.println(Arrays.deepToString(students.toArray()));
++        System.out.println(list);
++        students.removeAll(list);
++        System.out.println(Arrays.deepToString(students.toArray()));
++
++        for (Student student:list) {
++            assertFalse(students.contains(student));
++        }
++    }
++
++    @Test
++    void retainAll() {
++
++    }
++}
+\ No newline at end of file

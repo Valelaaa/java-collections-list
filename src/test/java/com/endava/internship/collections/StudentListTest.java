@@ -2,26 +2,39 @@ package com.endava.internship.collections;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.EmptySource;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
+import java.util.stream.Stream;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-
+import static java.lang.Integer.MAX_VALUE;
+import static java.lang.Integer.MIN_VALUE;
 
 class StudentListTest {
-    private int EXPECTED_SIZE = 0;
+    private int expectedSize;
     private StudentList students;
+    private StudentList emptyList;
+    private Student[] studentsArray;
     private List<Student> helper;
     private ListIterator<Student> listIterator;
     private Iterator<Student> iterator;
@@ -30,211 +43,196 @@ class StudentListTest {
     private static final Student STUDENT2 = new Student("Nikita", LocalDate.of(2002, 1, 14), "Bro");
     private static final Student STUDENT3 = new Student("Karina", LocalDate.of(2001, 6, 26), "Lovesick girl");
     private static final Student STUDENT4 = new Student("Malinka", LocalDate.of(2004, 9, 20), "Karina's alter ego");
-    private static final Student EMPTYSTUDENT = null;
+    private static final Student EMPTY_STUDENT = null;
+    private static final int ZERO = 0;
+    private static final int ONE = 1;
+    private static final int MINUS_ONE = -1;
+    private static final int THREE = 3;
 
     @BeforeEach
     public void Init() {
         students = new StudentList();
         iterator = students.iterator();
         helper = new ArrayList<>();
+        emptyList = new StudentList();
+
         listIterator = students.listIterator();
         helper.add(STUDENT1);
         helper.add(STUDENT2);
         students.add(STUDENT0);
         students.add(STUDENT1);
         students.add(STUDENT2);
-        EXPECTED_SIZE = 3;
+        expectedSize = THREE;
     }
 
     @Test
-    void whenCreateEmptyStudentList_ShouldBeEmpty() {
-        StudentList students = new StudentList();
-        assertTrue(students.isEmpty());
+    void shouldBeEmptyWhenCreateStudentList() {
+        assertTrue(emptyList.isEmpty());
     }
 
     @Test
-    void whenAddedOneElementStudentList_IsNotEmpty() {
-        StudentList students = new StudentList();
-        students.add(STUDENT0);
-        assertFalse(students.isEmpty());
+    void shouldNotBeEmptyWhenAddedElement() {
+        assertTrue(emptyList.add(STUDENT0));
+        assertFalse(emptyList.isEmpty());
     }
 
     @Test
-    void whenAddedOneElement_ShouldReturnTrue() {
-        assertTrue(students.add(STUDENT0));
-    }
-
-    @Test
-    void whenAddedOneElement_ShouldNotBeEmpty() {
-        StudentList students = new StudentList();
-        students.add(STUDENT0);
-        assertFalse(students.isEmpty());
-    }
-
-    @Test
-    void whenAddedOneElementStudentList_SizeIncreases() {
+    void sizeShouldIncreaseWhenAddedElement() {
         final int size = students.size();
+
         students.add(STUDENT0);
+
         assertEquals(students.size(), size + 1);
     }
 
-    @Test
-    void whenIndexLessThanZeroOrMoreThanSize_RemoveShouldThrowArrayIndexOutOfBoundsException() {
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> students.remove(-1));
+
+    @ParameterizedTest
+    @ValueSource(ints = {MIN_VALUE, MINUS_ONE,THREE, MAX_VALUE})
+    void shouldThrowArrayIndexOutOfBoundExceptionWhenRemove(final int index) {
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> students.remove(index));
     }
 
     @Test
-    void whenAddedAndRemovedOneElement_ListShouldBeEmpty() {
-        StudentList students = new StudentList();
+    void listShouldRemoveOneElementFromList() {
+        final int size = students.size();
 
-        students.add(STUDENT0);
         students.remove(STUDENT0);
 
-        assertEquals(0, students.size());
-        assertTrue(students.isEmpty());
+        assertEquals(size - 1, students.size());
     }
 
     @Test
-    void whenElementDoesNotRemoved_ShouldReturnFalse() {
-        StudentList students = new StudentList();
-        assertFalse(students.remove(STUDENT0));
+    void shouldNotRemoveUnexistingStudent() {
+        assertFalse(emptyList.remove(STUDENT0));
     }
 
     @Test
-    void whenElementInList_ContainsShouldReturnTrue() {
+    void containsShouldReturnTrueWhenElementInList() {
         students.add(STUDENT0);
-        students.add(EMPTYSTUDENT);
-        students.remove(EMPTYSTUDENT);
+        students.add(EMPTY_STUDENT);
+        students.remove(EMPTY_STUDENT);
 
-        assertFalse(students.contains(EMPTYSTUDENT));
+        assertFalse(students.contains(EMPTY_STUDENT));
         assertTrue(students.contains(STUDENT0));
     }
 
     @Test
-    void whenThereIsNoElementInList_ContainShouldReturnFalse() {
-        StudentList students = new StudentList();
-        assertFalse(students.contains(STUDENT1));
+    void shouldReturnIndexOfElementInList() {
+        students.add(EMPTY_STUDENT);
+
+        assertEquals(ZERO, students.indexOf(STUDENT0));
+        assertEquals(THREE, students.indexOf(EMPTY_STUDENT));
+        assertEquals(MINUS_ONE, students.indexOf(STUDENT3));
+
     }
 
     @Test
-    void whenCallIndexOf_ReturnsIndexOfElementInList() {
-        students.add(EMPTYSTUDENT);
-        assertEquals(0, students.indexOf(STUDENT0));
-        assertEquals(3, students.indexOf(EMPTYSTUDENT));
+    void shouldReturnElementByIndex() {
+        assertEquals(STUDENT0, students.get(ZERO));
+
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {MIN_VALUE, MINUS_ONE, THREE, MAX_VALUE})
+    void shouldThrowArrayIndexOutOfBoundsExceptionWhenGet(final int number) {
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> students.get(number));
     }
 
     @Test
-    void indexOfWhenListDoesNotContainsElement() {
-        assertEquals(-1, students.indexOf(STUDENT3));
+    void removeShouldShiftElementsInList() {
+        students.remove(ONE);
+
+        assertEquals(STUDENT2, students.get(ONE));
     }
 
     @Test
-    void whenCallGet_ReturnsElementByIndex() {
-        assertEquals(STUDENT0, students.get(0));
-    }
-
-    @Test
-    void whenCallGetToIndexMoreThanSizeOrLessThanZero_ThrowsArrayIndexOutOfBoundsException() {
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> students.get(-1));
-    }
-
-    @Test
-    void whenElementByIndexReturned_NextElementGetPreviousIndex() {
-        students.remove(1);
-        assertEquals(STUDENT2, students.get(1));
-    }
-
-    @Test
-    void whenListHaveNextElement_HasNextReturnsTrue() {
+    void hasNextShouldReturnTrueIfNotEndOfList() {
         assertTrue(iterator.hasNext());
     }
 
     @Test
-    void whenInvokeIteratorNext_ReturnsNextElementInList() {
+    void shouldNextShouldReturnCurrentElementOfList() {
         assertEquals(STUDENT0, iterator.next());
     }
 
     @Test
-    void whenInvokeIteratorAfterLastElement_ThrowsNoSuchElementException() {
+    void nextShouldThrowNoSuchElementExceptionWhenOutOfArray() {
         while (iterator.hasNext())
             iterator.next();
+
         assertThrows(NoSuchElementException.class, () -> iterator.next());
     }
 
     @Test
     void sizeShouldBeEqualToExpectedSize() {
-        assertEquals(EXPECTED_SIZE, students.size());
+        assertEquals(expectedSize, students.size());
     }
 
     @Test
     void toArrayShouldReturnArrayThatContainsAllTheElements() {
-        Student[] studentsArray = new Student[EXPECTED_SIZE];
+        studentsArray = new Student[expectedSize];
+
         studentsArray[0] = STUDENT0;
         studentsArray[1] = STUDENT1;
         studentsArray[2] = STUDENT2;
+
         assertArrayEquals(studentsArray, students.toArray());
     }
 
-    @Test
-    void toArrayThrowsNullPointerExceptionIfArrayIsNull() {
-        assertThrows(NullPointerException.class, () -> students.toArray((Object[]) null));
+    @ParameterizedTest
+    @NullSource
+    void toArrayThrowsNullPointerExceptionIfArrayIsNull(final Object[] object) {
+        assertThrows(NullPointerException.class, () -> students.toArray(object));
     }
 
     @Test
-    void toArrayThrowsClassCastExceptionIfCanNotCastClass() {
-        TestDummy[] testDummies = new TestDummy[EXPECTED_SIZE];
+    void toArrayThrowsClassCastExceptionWhenCantCast() {
+        TestDummy[] testDummies = new TestDummy[expectedSize];
         assertThrows(ClassCastException.class, () -> students.toArray(testDummies));
     }
 
-    @Test
-    void toArrayWhenArrayLengthLessThanSizeOfList_ShouldMakeNewArrayWithSizeOfList() {
-        Student[] studentArray = new Student[2];
-        assertEquals(students.size(), students.toArray(studentArray).length);
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1, 2})
+    void toArrayShouldMakeNewArrayWithListSize(final int number) {
+        studentsArray = new Student[number];
+        assertEquals(students.size(), students.toArray(studentsArray).length);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {5, 6, 8, 10})
+    void toArrayLastElementsShouldBeNull(final int number) {
+        studentsArray = new Student[number];
+        assertNull(students.toArray(studentsArray)[number - 1]);
     }
 
     @Test
-    void toArrayWhenArrayLengthMoreThanSizeOfList_LastElementsOfArrayShouldBeNull() {
-        final int length = 5;
-        Student[] studentArray = new Student[length];
-        assertNull(students.toArray(studentArray)[length - 1]);
-    }
-
-    @Test
-    void whenInvokeCall_ListShouldBeEmpty() {
+    void shouldClearList() {
         students.clear();
         assertTrue(students.isEmpty());
     }
 
     @Test
     void setShouldSucceed() {
-        students.set(1, EMPTYSTUDENT);
-        assertEquals(EMPTYSTUDENT, students.get(1));
+        students.set(ONE, EMPTY_STUDENT);
+        assertEquals(EMPTY_STUDENT, students.get(ONE));
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {MIN_VALUE, MINUS_ONE, MAX_VALUE})
+    void setAddRemoveShouldThrowArrayIndexOutOfBoundsException(final int number) {
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> students.set(number, STUDENT3));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> students.add(number, STUDENT3));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> students.remove(number));
     }
 
     @Test
-    void whenSetIndexMoreThanSizeOrLessThanZero_ThrowsArrayIndexOutOfBoundsException() {
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> students.set(-1, EMPTYSTUDENT));
-    }
+    void addWithIndexShouldShiftElements() {
+        Student temp = students.get(ONE);
 
-    @Test
-    void whenAddIndexMoreThanSizeOrLessThanZero_ThrowsArrayIndexOutOfBoundException() {
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> students.add(-2, STUDENT3));
-    }
+        students.add(ONE, STUDENT3);
 
-    @Test
-    void whenRemoveIndexMoreThanSizeOrLessThanZero_ThrowsArrayIndexOutOfBoundException() {
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> students.add(-2, STUDENT3));
-    }
-
-    @Test
-    void whenAddWithIndexCalledElementAddsInIndexPreviousElementShiftedToRight() {
-        final int addIndex = 1;
-        Student temp = students.get(addIndex);
-
-        students.add(addIndex, STUDENT3);
-
-        assertEquals(STUDENT3, students.get(1));
-        assertEquals(temp, students.get(addIndex + 1));
+        assertEquals(STUDENT3, students.get(ONE));
+        assertEquals(temp, students.get(ONE + 1));
     }
 
     @Test
@@ -242,8 +240,8 @@ class StudentListTest {
         final int ValueLastIndexOf = students.size();
         students.add(STUDENT1);
         assertEquals(ValueLastIndexOf, students.lastIndexOf(STUDENT1));
-        students.add(EMPTYSTUDENT);
-        assertEquals(ValueLastIndexOf + 1, students.lastIndexOf(EMPTYSTUDENT));
+        students.add(EMPTY_STUDENT);
+        assertEquals(ValueLastIndexOf + 1, students.lastIndexOf(EMPTY_STUDENT));
     }
 
     @Test
@@ -254,28 +252,26 @@ class StudentListTest {
     }
 
     @Test
-    void whenSubListIndexesAreLessThanZeroOrMoreThanSize_ThrowsIndexOutOfBoundsException() {
-        assertThrows(IndexOutOfBoundsException.class, () -> students.subList(-1, 999));
+    void subListShouldThrowIndexOutOfBoundsException() {
+        assertThrows(IndexOutOfBoundsException.class, () -> students.subList(MINUS_ONE, MAX_VALUE));
     }
 
     @Test
-    void whenSubListIndexesAreInWrongOrder_ThrowsIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class, () -> students.subList(3, 1));
+    void subListShouldThrowIllegalArgumentExceptionWhenWrongOrder() {
+        assertThrows(IllegalArgumentException.class, () -> students.subList(THREE, ONE));
     }
 
     @Test
     void addAllShouldSucceed() {
-        StudentList list = new StudentList();
-        list.addAll(students);
+        emptyList.addAll(students);
         for (Student student : students)
-            assertTrue(list.contains(student));
+            assertTrue(emptyList.contains(student));
     }
 
-    @Test
-    void addAllShouldThrowsNullPointerException_IfCollectionIsNull() {
-        helper = null;
-        StudentList students = new StudentList();
-        assertThrows(NullPointerException.class, () -> students.addAll(helper));
+    @ParameterizedTest
+    @NullSource
+    void addAllShouldThrowNullPointerExceptionWhenNull(final Collection<Student> collection) {
+        assertThrows(NullPointerException.class, () -> emptyList.addAll(collection));
     }
 
     @Test
@@ -285,10 +281,10 @@ class StudentListTest {
             assertTrue(students.contains(student));
     }
 
-    @Test
-    void containsAllShouldThrowsNullPointerException_IfCollectionIsNull() {
-        helper = null;
-        assertThrows(NullPointerException.class, () -> students.containsAll(helper));
+    @ParameterizedTest
+    @NullSource
+    void containsAllShouldThrowNullPointerExceptionWhenNull(final Collection<Student> collection) {
+        assertThrows(NullPointerException.class, () -> students.containsAll(collection));
     }
 
     @Test
@@ -298,16 +294,16 @@ class StudentListTest {
             assertFalse(students.contains(student));
     }
 
-    @Test
-    void removeAllShouldThrowsNullPointerException_IfCollectionIsNull() {
-        helper = null;
-        assertThrows(NullPointerException.class, () -> students.removeAll(helper));
+    @ParameterizedTest
+    @NullSource
+    void removeAllShouldThrowNullPointerExceptionWhenNull(final Collection<Student> collection) {
+        assertThrows(NullPointerException.class, () -> students.removeAll(collection));
     }
 
-    @Test
-    void retainAllShouldThrowsNullPointerException_IfCollectionIsNull() {
-        helper = null;
-        assertThrows(NullPointerException.class, () -> students.retainAll(helper));
+    @ParameterizedTest
+    @NullSource
+    void retainAllShouldThrowNullPointerExceptionWhenNull(final Collection<Student> collection) {
+        assertThrows(NullPointerException.class, () -> students.retainAll(collection));
     }
 
     @Test
@@ -316,136 +312,149 @@ class StudentListTest {
         assertArrayEquals(helper.toArray(), students.toArray());
     }
 
-    @Test
-    void addAllWithIndexShouldThrowsNullPointerException_IfCollectionIsNull() {
-        helper = null;
-        assertThrows(NullPointerException.class, () -> students.addAll(1, helper));
+    @ParameterizedTest
+    @NullSource
+    void addAllShouldThrowsNullPointerExceptionWhenNull(final Collection<Student> collection) {
+        assertThrows(NullPointerException.class, () -> students.addAll(ONE, collection));
     }
 
-    @Test
-    void addAllWithIndexShouldThrowsIndexOutOfBoundsException_IfIndexMoreThanSizeOrLessThanZero() {
-        final int index = -1;
-        assertThrows(IndexOutOfBoundsException.class, () -> students.addAll(index, helper));
+    @ParameterizedTest
+    @ValueSource(ints = {MIN_VALUE, MINUS_ONE, MAX_VALUE})
+    void addAllShouldThrowIndexOutOfBoundsException(final int number) {
+        assertThrows(IndexOutOfBoundsException.class, () -> students.addAll(number, helper));
     }
 
     @Test
     void addAllWithIndexShouldSucceed() {
         helper = new ArrayList<>();
+
         helper.add(STUDENT3);
         helper.add(STUDENT4);
-        final int index = 1;
-        assertTrue(students.addAll(index, helper));
+
+        assertTrue(students.addAll(ONE, helper));
         for (Student student : helper)
             assertTrue(students.contains(student));
-        assertArrayEquals(students.subList(index, index + 2).toArray(), helper.toArray());
+        assertArrayEquals(students.subList(ONE, ONE + 2).toArray(), helper.toArray());
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {MIN_VALUE, MAX_VALUE})
+    void listIteratorShouldThrowIndexOutOfBoundExceptionWhenWrongParameter(final int number) {
+        assertThrows(IndexOutOfBoundsException.class, () -> students.listIterator(number));
     }
 
     @Test
-    void whenListIteratorCreationParameterMoreThanSizeOrLessThanMinusOne_ThrowsIndexOutOfBoundsException() {
-        assertThrows(IndexOutOfBoundsException.class, () -> students.listIterator(-5));
-    }
-
-    @Test
-    void whenListIteratorHaveNextElement_HasNextReturnsTrue() {
+    void naveNextShouldReturnTrueWhenIteratorHasNextElement() {
         assertTrue(listIterator.hasNext());
     }
 
     @Test
-    void whenInvokeListIteratorNext_ReturnsNextElementInList() {
+    void nextShouldReturnCurrentElement() {
         assertEquals(STUDENT0, listIterator.next());
     }
 
     @Test
-    void whenListIteratorHavePreviousElement_HasPreviousReturnsTrue() {
+    void havePreviousShouldReturnsTrueWhenIteratorHasNextElement() {
         listIterator.next();
         assertTrue(listIterator.hasPrevious());
     }
 
     @Test
-    void whenInvokeListIteratorPrevious_ReturnsPreviousElementInList() {
+    void previousShouldReturnsCurrentElement() {
         listIterator.next();
         assertEquals(STUDENT0, listIterator.previous());
     }
 
     @Test
-    void whenInvokeListIteratorNextAfterLastElement_ThrowsNoSuchElementException() {
+    void nextShouldThrowsNoSuchElementExceptionAtLastElement() {
         while (listIterator.hasNext())
             listIterator.next();
         assertThrows(NoSuchElementException.class, () -> listIterator.next());
     }
 
     @Test
-    void whenInvokeListIteratorPreviousAtFirstElement_ThrowsNoSuchElementException() {
+    void previousShouldThrowsNoSuchElementExceptionAtFirstElement() {
         assertThrows(NoSuchElementException.class, () -> listIterator.previous());
     }
 
     @Test
     void nextIndexShouldSucceed() {
-        assertEquals(0, listIterator.nextIndex());
+        assertEquals(ZERO, listIterator.nextIndex());
         listIterator.next();
-        assertEquals(1, listIterator.nextIndex());
+        assertEquals(ONE, listIterator.nextIndex());
     }
 
     @Test
     void previousIndexShouldSucceed() {
         listIterator.next();
-        assertEquals(0, listIterator.previousIndex());
+        assertEquals(ZERO, listIterator.previousIndex());
     }
 
     @Test
-    void invokeRemoveWhenIteratorDoesNotIterated_ShouldThrowIllegalStateException() {
+    void removeShouldThrowIllegalStateExceptionWhenNotIterated() {
         assertThrows(IllegalStateException.class, () -> listIterator.remove());
     }
 
     @Test
     void listIteratorRemoveShouldSucceed() {
-        Student temp = listIterator.next();
+        final Student temp = listIterator.next();
         listIterator.remove();
         assertFalse(students.contains(temp));
     }
 
-    @Test
-    void invokeAddWhenIteratorDoesNotIterated_ShouldThrowIllegalStateException() {
-        assertThrows(IllegalStateException.class, () -> listIterator.add(null));
+    @ParameterizedTest
+    @NullSource
+    void addShouldThrowIllegalStateExceptionWhenNull(final Student student) {
+        assertThrows(IllegalStateException.class, () -> listIterator.add(student));
     }
 
     @Test
     void listIteratorSetShouldChangeElement() {
-        listIterator.next();
-        listIterator.next();
         final int startSize = students.size();
+
+        listIterator.next();
+        listIterator.next();
         listIterator.set(STUDENT4);
-        assertEquals(STUDENT4, students.get(1));
+
+        assertEquals(STUDENT4, students.get(ONE));
         assertEquals(startSize, students.size());
     }
 
-    @Test
-    void invokeSetWhenIteratorDoesNotIterated_ShouldThrowIllegalStateException() {
-        assertThrows(IllegalStateException.class, () -> listIterator.set(null));
+    @ParameterizedTest
+    @NullSource
+    void setShouldThrowIllegalStateExceptionWhenNull(final Student student) {
+        assertThrows(IllegalStateException.class, () -> listIterator.set(student));
     }
 
     @Test
-    void listIteratorAddShouldAddElement_SizeShouldIncrease() {
-        listIterator.next();
-        listIterator.next();
+    void SizeShouldIncreaseWhenAddElement() {
         final int startSize = students.size();
+
+        listIterator.next();
+        listIterator.next();
         listIterator.add(STUDENT4);
-        assertEquals(STUDENT4, students.get(1));
+
+        assertEquals(STUDENT4, students.get(ONE));
         assertEquals(startSize + 1, students.size());
     }
+
     @Test
-    void createStudentListWithNumberThatLessZero_ShouldThrowIllegalArgumentException(){
-        assertThrows(IllegalArgumentException.class,()-> students = new StudentList(-1));
+    void constructorShouldThrowIllegalArgumentExceptionWhenNegative() {
+        assertThrows(IllegalArgumentException.class, () -> students = new StudentList(MINUS_ONE));
     }
-    @Test
-    void createStudentListWithNullParameter_shouldThrowNullPointerException(){
-        assertThrows(NullPointerException.class,()-> students = new StudentList(null));
+
+    @ParameterizedTest
+    @NullSource
+    void constructorShouldThrowNullPointerExceptionWhenNull(final Collection<Student> collection) {
+        assertThrows(NullPointerException.class, () -> students = new StudentList(collection));
     }
+
     @Test
-    void createdStudentListMustContainsCollection(){
+    void createdStudentListShouldContainsCollection() {
         StudentList students = new StudentList(helper);
         assertTrue(students.containsAll(helper));
     }
+
     static final class TestDummy {
     }
 }
