@@ -48,15 +48,15 @@ class StudentListTest {
 
     @Test
     void whenCreateEmptyStudentList_ShouldBeEmpty() {
-        StudentList students = new StudentList();
-        assertTrue(students.isEmpty());
+        StudentList students1 = new StudentList();
+        assertTrue(students1.isEmpty());
     }
 
     @Test
     void whenAddedOneElementStudentList_IsNotEmpty() {
-        StudentList students = new StudentList();
-        students.add(STUDENT0);
-        assertFalse(students.isEmpty());
+        StudentList students1 = new StudentList();
+        students1.add(STUDENT0);
+        assertFalse(students1.isEmpty());
     }
 
     @Test
@@ -66,9 +66,9 @@ class StudentListTest {
 
     @Test
     void whenAddedOneElement_ShouldNotBeEmpty() {
-        StudentList students = new StudentList();
-        students.add(STUDENT0);
-        assertFalse(students.isEmpty());
+        StudentList students1 = new StudentList();
+        students1.add(STUDENT0);
+        assertFalse(students1.isEmpty());
     }
 
     @Test
@@ -85,19 +85,19 @@ class StudentListTest {
 
     @Test
     void whenAddedAndRemovedOneElement_ListShouldBeEmpty() {
-        StudentList students = new StudentList();
+        StudentList students1 = new StudentList();
 
-        students.add(STUDENT0);
-        students.remove(STUDENT0);
+        students1.add(STUDENT0);
+        students1.remove(STUDENT0);
 
-        assertEquals(0, students.size());
-        assertTrue(students.isEmpty());
+        assertEquals(0, students1.size());
+        assertTrue(students1.isEmpty());
     }
 
     @Test
     void whenElementDoesNotRemoved_ShouldReturnFalse() {
-        StudentList students = new StudentList();
-        assertFalse(students.remove(STUDENT0));
+        StudentList students1 = new StudentList();
+        assertFalse(students1.remove(STUDENT0));
     }
 
     @Test
@@ -112,8 +112,8 @@ class StudentListTest {
 
     @Test
     void whenThereIsNoElementInList_ContainShouldReturnFalse() {
-        StudentList students = new StudentList();
-        assertFalse(students.contains(STUDENT1));
+        StudentList students1 = new StudentList();
+        assertFalse(students1.contains(STUDENT1));
     }
 
     @Test
@@ -274,8 +274,8 @@ class StudentListTest {
     @Test
     void addAllShouldThrowsNullPointerException_IfCollectionIsNull() {
         helper = null;
-        StudentList students = new StudentList();
-        assertThrows(NullPointerException.class, () -> students.addAll(helper));
+        StudentList students1 = new StudentList();
+        assertThrows(NullPointerException.class, () -> students1.addAll(helper));
     }
 
     @Test
@@ -433,19 +433,28 @@ class StudentListTest {
         assertEquals(STUDENT4, students.get(1));
         assertEquals(startSize + 1, students.size());
     }
+
     @Test
-    void createStudentListWithNumberThatLessZero_ShouldThrowIllegalArgumentException(){
-        assertThrows(IllegalArgumentException.class,()-> students = new StudentList(-1));
+    void createStudentListWithNumberThatLessZero_ShouldThrowIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, () -> students = new StudentList(-1));
     }
+
     @Test
-    void createStudentListWithNullParameter_shouldThrowNullPointerException(){
-        assertThrows(NullPointerException.class,()-> students = new StudentList(null));
+    void createStudentListWithNullParameter_shouldThrowNullPointerException() {
+        assertThrows(NullPointerException.class, () -> students = new StudentList(null));
     }
+
     @Test
-    void createdStudentListMustContainsCollection(){
-        StudentList students = new StudentList(helper);
-        assertTrue(students.containsAll(helper));
+    void createdStudentListMustContainsCollection() {
+        StudentList students1 = new StudentList(helper);
+        assertTrue(students1.containsAll(helper));
     }
+
+    /**
+     * class for testing ClassCastException
+     */
     static final class TestDummy {
+        public TestDummy() {
+        }
     }
 }
