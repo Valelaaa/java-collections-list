@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="313cd13a-0f4a-4c1d-a20c-f680957b3288" name="Changes" comment="StudentList implementation v1.7&#10;- Added junit tests">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="313cd13a-0f4a-4c1d-a20c-f680957b3288" name="Changes" comment="StudentList implementation v1.8&#10;- Added junit tests">
       <change beforePath="$PROJECT_DIR$/src/test/java/com/endava/internship/collections/StudentListTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/endava/internship/collections/StudentListTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -357,7 +356,8 @@
     <MESSAGE value="StudentList implementation v1.5&#10;- class &quot;ExceptionMessages&quot; moved to file &quot;ExceptionTessages.java&quot;&#10;- added static import for String.format&#10;- fixed" />
     <MESSAGE value="StudentList implementation v1.6&#10;- Added static import for some static methods&#10;- Added static import for constants" />
     <MESSAGE value="StudentList implementation v1.7&#10;- Added junit tests" />
-    <option name="LAST_COMMIT_MESSAGE" value="StudentList implementation v1.7&#10;- Added junit tests" />
+    <MESSAGE value="StudentList implementation v1.8&#10;- Added junit tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="StudentList implementation v1.8&#10;- Added junit tests" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
@@ -370,7 +370,7 @@
     <SUITE FILE_PATH="coverage/java_collections_listv1$StudentListTest_toArrayThrowsNullPointerExceptionIfArrayIsNull.ic" NAME="StudentListTest.toArrayThrowsNullPointerExceptionIfArrayIsNull Coverage Results" MODIFIED="1663683686964" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>com.endava.internship.collections.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/java_collections_listv1$StudentListTest.ic" NAME="StudentListTest Coverage Results" MODIFIED="1663745399077" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/java_collections_listv1$StudentListTest.ic" NAME="StudentListTest Coverage Results" MODIFIED="1663861644166" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>com.endava.internship.collections.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/java_collections_listv1$StudentListTest_sizeShouldSucceed.ic" NAME="StudentListTest.sizeShouldSucceed Coverage Results" MODIFIED="1663320535945" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
