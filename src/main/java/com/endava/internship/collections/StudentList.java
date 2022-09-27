@@ -19,9 +19,9 @@ import static com.endava.internship.collections.ExceptionMessages.SUBLIST_ILLEGA
 import static java.lang.System.arraycopy;
 import static java.util.Arrays.asList;
 import static java.util.Arrays.copyOfRange;
-import static java.util.Objects.nonNull;
 import static java.util.Objects.isNull;
 import static java.lang.String.format;
+
 /**
  * StudentList class implements List interface
  *
@@ -117,11 +117,15 @@ public class StudentList implements List<Student> {
      */
     @Override
     public boolean contains(final Object o) {
-        if (isNull(o))
-            throw new NullPointerException(format(NULL_POINTER_EXCEPTION_MESSAGE, "contains", "Object"));
-        for (int i = 0; i < size; i++)
-            if (students[i].equals(o))
-                return true;
+        if (isNull(o)) {
+            for (int i = 0; i < size; i++)
+                if (students[i] == null)
+                    return true;
+        } else {
+            for (int i = 0; i < size; i++)
+                if (students[i].equals(o))
+                    return true;
+        }
         return false;
     }
 
@@ -153,7 +157,7 @@ public class StudentList implements List<Student> {
              */
             @Override
             public Student next() {
-                if (current >= size)
+                if (current + 1 >= size)
                     throw new NoSuchElementException(NO_SUCH_ELEMENT_EXCEPTION_MESSAGE);
                 return students[++current];
             }
@@ -220,16 +224,24 @@ public class StudentList implements List<Student> {
      */
     @Override
     public boolean remove(final Object o) {
-        if (nonNull(o)) {
+        boolean found = false;
+        if (isNull(o)) {
+            for (int i = 0; i < size; i++)
+                if (students[i] == null) {
+                    arraycopy(students, i + 1, students, i, size - i);
+                    found = true;
+                    break;
+                }
+        } else {
             for (int i = 0; i < size; i++)
                 if (students[i].equals(o)) {
+                    found = true;
                     arraycopy(students, i + 1, students, i, size - i);
                     break;
                 }
-            size--;
-            return true;
         }
-        return false;
+        size--;
+        return found;
     }
 
     /**
@@ -307,6 +319,7 @@ public class StudentList implements List<Student> {
                     format(ARRAY_INDEX_OUT_OF_BOUNDS_EXCEPTION_MESSAGE, i, size));
         Student temp = students[i];
         arraycopy(students, i + 1, students, i, size - i);
+        size--;
         return temp;
     }
 
@@ -319,11 +332,15 @@ public class StudentList implements List<Student> {
      */
     @Override
     public int indexOf(final Object o) {
-        if (isNull(o))
-            return -1;
-        for (int i = 0; i < size; i++)
-            if (o.equals(students[i]))
-                return i;
+        if (isNull(o)) {
+            for (int i = 0; i < size; i++)
+                if (students[i] == null)
+                    return i;
+        } else {
+            for (int i = 0; i < size; i++)
+                if (o.equals(students[i]))
+                    return i;
+        }
         return -1;
     }
 
@@ -337,11 +354,16 @@ public class StudentList implements List<Student> {
      */
     @Override
     public int lastIndexOf(final Object o) {
-        if (isNull(o))
-            return -1;
-        for (int i = size - 1; i >= 0; i--) {
-            if (o.equals(students[i]))
-                return i;
+        if (isNull(o)) {
+            for (int i = size - 1; i >= 0; i--) {
+                if (students[i] == null)
+                    return i;
+            }
+        } else {
+            for (int i = size - 1; i >= 0; i--) {
+                if (o.equals(students[i]))
+                    return i;
+            }
         }
         return -1;
     }
@@ -367,7 +389,7 @@ public class StudentList implements List<Student> {
      */
     @Override
     public ListIterator<Student> listIterator(final int i) {
-        if (i < 0 || i >= size)
+        if (i < -1 || i >= size)
             throw new IndexOutOfBoundsException(
                     format(
                             ARRAY_INDEX_OUT_OF_BOUNDS_EXCEPTION_MESSAGE, i, size));
@@ -397,8 +419,8 @@ public class StudentList implements List<Student> {
             public Student previous() {
                 if (!hasPrevious())
                     throw new NoSuchElementException(NO_SUCH_ELEMENT_EXCEPTION_MESSAGE);
-                wasCalled = --current;
-                return students[current];
+                wasCalled = current - 1;
+                return students[current--];
             }
 
             @Override
@@ -469,7 +491,6 @@ public class StudentList implements List<Student> {
     public boolean addAll(final Collection<? extends Student> collection) {
         if (isNull(collection))
             throw new NullPointerException(format(NULL_POINTER_EXCEPTION_MESSAGE, "addAll", "ts"));
-
         final Student[] array = collection.toArray(new Student[collection.size()]);
         if (array.length + size > capacity) {
             capacity = ((array.length + size) * 3) / 2 + 1;
@@ -494,7 +515,7 @@ public class StudentList implements List<Student> {
     @Override
     public boolean containsAll(final Collection<?> collection) {
         if (isNull(collection))
-            throw new NullPointerException(format(NULL_POINTER_EXCEPTION_MESSAGE, "containsAll", "colleciton"));
+            throw new NullPointerException(format(NULL_POINTER_EXCEPTION_MESSAGE, "containsAll", "colection"));
         for (Object obj : collection) {
             if (!contains(obj))
                 return false;
@@ -535,7 +556,7 @@ public class StudentList implements List<Student> {
     @Override
     public boolean removeAll(final Collection<?> collection) {
         if (isNull(collection))
-            throw new NullPointerException(format(NULL_POINTER_EXCEPTION_MESSAGE, "removeAll", "collection"));
+            throw new NullPointerException(format(NULL_POINTER_EXCEPTION_MESSAGE, "removeAll", "Collection"));
         boolean modified = false;
         for (Object obj : collection)
             if (remove(obj))
